@@ -19,3 +19,4 @@ export async function run(argv = process.argv) {
 
   await program.parseAsync(argv);
 }
+
