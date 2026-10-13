@@ -19,3 +19,10 @@ coverage/
 # OS files
 .DS_Store
 Thumbs.db
+
+#docs
+engineering.md
+projec_spec.md
+tasks.md
+
+push.sh
