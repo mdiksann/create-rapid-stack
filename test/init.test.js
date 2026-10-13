@@ -17,4 +17,3 @@ test("CLI --version prints package version", async () => {
   const { stdout } = await execFileAsync(process.execPath, [binPath, "--version"]);
   assert.equal(stdout.trim(), "0.1.0");
 });
-

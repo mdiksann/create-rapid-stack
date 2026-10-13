@@ -188,7 +188,16 @@ This "base + overlay" model avoids combinatorial template explosion: `1 base + 2
 
 ### 3.5 Marker Convention
 
-All injectable values use double-curly markers: `{{PROJECT_NAME}}`, `{{DATABASE_URL}}`, `{{DATABASE_SERVICE}}`, `{{API_URL}}`, `{{PORT}}`. The full list lives in one exported constant (`MARKERS`) in `src/scaffold.js` — adding a variable is a one-line change plus a template edit.
+All injectable values use double-curly markers: `{{PROJECT_NAME}}`, `{{DATABASE_URL}}`, `{{DATABASE_SERVICE}}`, `{{NEXT_PUBLIC_API_URL}}`, `{{API_URL}}`, `{{PORT}}`. The full list lives in one exported constant (`MARKERS`) in `src/scaffold.js` — adding a variable is a one-line change plus a template edit.
+
+| Marker | Default / Example Value | Target Files |
+|--------|-------------------------|--------------|
+| `{{PROJECT_NAME}}` | `<projectName>` (e.g. `my-app`) | `README.md`, `package.json`, `frontend/package.json`, `backend/package.json` |
+| `{{DATABASE_URL}}` | `postgresql://postgres:postgres@localhost:5432/app_db?schema=public` or `mongodb://mongo:mongo@localhost:27017/app_db?authSource=admin` | `README.md`, `backend/.env.example`, `backend/.env`, `partials/env/backend.env`, `docker-compose.yml` |
+| `{{DATABASE_SERVICE}}` | Contents of `overlays/db/<db>/docker-compose.db.yml` | `docker-compose.yml` |
+| `{{NEXT_PUBLIC_API_URL}}` | `http://localhost:4000` | `frontend/.env.example`, `partials/env/frontend.env`, `docker-compose.yml` |
+| `{{API_URL}}` | `http://localhost:4000` | `README.md` |
+| `{{PORT}}` | `4000` | `README.md`, `backend/.env.example`, `backend/.env`, `partials/env/backend.env`, `docker-compose.yml` |
 
 **Markers are forbidden outside of:**
 - `README.md`, `.env.example`/`.env`, `docker-compose.yml`, `package.json`

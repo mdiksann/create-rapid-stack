@@ -37,47 +37,47 @@ Actionable task list, ordered by phase. Each phase is independently verifiable �
 **Exit criteria:** Each template tree runs standalone when `npm install` + `npm run dev` is executed inside it (manually verified for both DB choices).
 
 ### 2a. Shared / base templates
-- [ ] Create `templates/base/` root files:
-  - [ ] `README.md` with `{{PROJECT_NAME}}`, run instructions, stack overview
-  - [ ] `.gitignore` covering `node_modules`, `.env`, `dist`, `.next`
-- [ ] Create Express backend template (`templates/base/backend/`):
-  - [ ] `package.json` with `{{PROJECT_NAME}}` marker, `dev`/`start` scripts
-  - [ ] `src/index.js` — Express server, CORS, JSON body parsing, `/api/health`
-  - [ ] `src/routes/` — sample CRUD route using Prisma client
-  - [ ] `.env.example` with `{{DATABASE_URL}}`, `{{PORT}}`
-  - [ ] Error-handling middleware + graceful shutdown
-- [ ] Create Next.js frontend template (`templates/base/frontend/`):
-  - [ ] `package.json` with `{{PROJECT_NAME}}` marker, `dev`/`build`/`start` scripts
-  - [ ] `app/layout.js`, `app/page.js` (minimal, styled starter page)
-  - [ ] `app/api/health/route.js` or fetch helper pointing at `{{API_URL}}`
-  - [ ] `next.config.js` with `output: "standalone"` (required for Docker)
-  - [ ] `.env.example` with `{{NEXT_PUBLIC_API_URL}}`
+- [x] Create `templates/base/` root files:
+  - [x] `README.md` with `{{PROJECT_NAME}}`, run instructions, stack overview
+  - [x] `.gitignore` covering `node_modules`, `.env`, `dist`, `.next`
+- [x] Create Express backend template (`templates/base/backend/`):
+  - [x] `package.json` with `{{PROJECT_NAME}}` marker, `dev`/`start` scripts
+  - [x] `src/index.js` — Express server, CORS, JSON body parsing, `/api/health`
+  - [x] `src/routes/` — sample CRUD route using Prisma client
+  - [x] `.env.example` with `{{DATABASE_URL}}`, `{{PORT}}`
+  - [x] Error-handling middleware + graceful shutdown
+- [x] Create Next.js frontend template (`templates/base/frontend/`):
+  - [x] `package.json` with `{{PROJECT_NAME}}` marker, `dev`/`build`/`start` scripts
+  - [x] `app/layout.js`, `app/page.js` (minimal, styled starter page)
+  - [x] `app/api/health/route.js` or fetch helper pointing at `{{API_URL}}`
+  - [x] `next.config.js` with `output: "standalone"` (required for Docker)
+  - [x] `.env.example` with `{{NEXT_PUBLIC_API_URL}}`
 
 ### 2b. Database overlays
-- [ ] Create `templates/overlays/db/postgres/`:
-  - [ ] `backend/prisma/schema.prisma` — `provider = "postgresql"`, Int autoincrement IDs, sample relation
-  - [ ] `backend/prisma/seed.js`
-  - [ ] `docker-compose.db.yml` — `postgres:16-alpine` service, volume, healthcheck, env vars
-  - [ ] Mongo-specific `.env` fragment with `{{DATABASE_URL}}` postgres connection string
-- [ ] Create `templates/overlays/db/mongodb/`:
-  - [ ] `backend/prisma/schema.prisma` — `provider = "mongodb"`, `String @id @default(auto())`, `@map("_id")`
-  - [ ] `backend/prisma/seed.js`
-  - [ ] `docker-compose.db.yml` — `mongo:7` service, volume, healthcheck, `MONGO_INITDB_*`
-  - [ ] `.env` fragment with mongodb `{{DATABASE_URL}}`
-- [ ] Verify schema validity: run `npx prisma validate` against both schema files
+- [x] Create `templates/overlays/db/postgres/`:
+  - [x] `backend/prisma/schema.prisma` — `provider = "postgresql"`, Int autoincrement IDs, sample relation
+  - [x] `backend/prisma/seed.js`
+  - [x] `docker-compose.db.yml` — `postgres:16-alpine` service, volume, healthcheck, env vars
+  - [x] Mongo-specific `.env` fragment with `{{DATABASE_URL}}` postgres connection string
+- [x] Create `templates/overlays/db/mongodb/`:
+  - [x] `backend/prisma/schema.prisma` — `provider = "mongodb"`, `String @id @default(auto())`, `@map("_id")`
+  - [x] `backend/prisma/seed.js`
+  - [x] `docker-compose.db.yml` — `mongo:7` service, volume, healthcheck, `MONGO_INITDB_*`
+  - [x] `.env` fragment with mongodb `{{DATABASE_URL}}`
+- [x] Verify schema validity: run `npx prisma validate` against both schema files
 
 ### 2c. Docker overlay
-- [ ] Create `templates/overlays/docker/`:
-  - [ ] `frontend/Dockerfile` — multi-stage, deps → build → standalone runtime, non-root user
-  - [ ] `backend/Dockerfile` — multi-stage, prod deps only, `prisma generate` in build stage
-  - [ ] `docker-compose.yml` with `{{PROJECT_NAME}}`, `{{DATABASE_SERVICE}}` marker, frontend/backend services, `depends_on` with healthcheck conditions
-  - [ ] `.dockerignore` for both apps (or root-level)
-- [ ] Confirm compose file merges correctly with each DB overlay's service block
+- [x] Create `templates/overlays/docker/`:
+  - [x] `frontend/Dockerfile` — multi-stage, deps → build → standalone runtime, non-root user
+  - [x] `backend/Dockerfile` — multi-stage, prod deps only, `prisma generate` in build stage
+  - [x] `docker-compose.yml` with `{{PROJECT_NAME}}`, `{{DATABASE_SERVICE}}` marker, frontend/backend services, `depends_on` with healthcheck conditions
+  - [x] `.dockerignore` for both apps (or root-level)
+- [x] Confirm compose file merges correctly with each DB overlay's service block
 
 ### 2d. Template QA
-- [ ] Document every marker in a table (marker → files where it appears) — add to `engineering.md`
-- [ ] Manually scaffold both DB variants by hand-copying overlays; confirm zero leftover `{{...}}` tokens
-- [ ] Commit templates as a standalone, reviewable unit
+- [x] Document every marker in a table (marker → files where it appears) — add to `engineering.md`
+- [x] Manually scaffold both DB variants by hand-copying overlays; confirm zero leftover `{{...}}` tokens
+- [x] Commit templates as a standalone, reviewable unit
 
 ---
 

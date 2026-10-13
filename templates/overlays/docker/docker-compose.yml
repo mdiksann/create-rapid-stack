@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+{{DATABASE_SERVICE}}
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "{{PORT}}:{{PORT}}"
+    environment:
+      PORT: {{PORT}}
+      DATABASE_URL: "{{DATABASE_URL}}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "{{NEXT_PUBLIC_API_URL}}"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+
