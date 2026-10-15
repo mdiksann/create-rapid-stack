@@ -5,3 +5,4 @@ export class ScaffoldError extends Error {
     this.hint = hint;
   }
 }
+
