@@ -85,29 +85,29 @@ Actionable task list, ordered by phase. Each phase is independently verifiable �
 
 **Exit criteria:** `create-rapid-stack my-app --db postgres --docker --skip-install` parses fully and prints the resolved context as JSON (no file writes yet).
 
-- [ ] Implement `bin/index.js`:
-  - [ ] Shebang `#!/usr/bin/env node`
-  - [ ] Import and invoke `run(process.argv)` with top-level error handling
-- [ ] Implement `src/cli.js`:
-  - [ ] Configure `commander` program: name, description, version (read from `package.json`)
-  - [ ] Positional argument: `<project-name>` (optional)
-  - [ ] Flags: `--db <postgres|mongodb>`, `--docker` / `--no-docker`, `--skip-install`, `--yes`, `--verbose`, `--force`
-  - [ ] Wire `program.action()` to the orchestration pipeline
-  - [ ] Use `parseAsync` (required for async actions)
-- [ ] Implement `src/validate.js`:
-  - [ ] Project name validation via `validate-npm-package-name` (lowercase, npm-safe)
-  - [ ] Target directory checks: exists? empty? (respect `--force`)
-- [ ] Implement `src/prompts.js`:
-  - [ ] Question: project name (default = directory name, validated)
-  - [ ] Question: database → list choice PostgreSQL (default) / MongoDB
-  - [ ] Question: Docker → confirm (default: Yes)
-  - [ ] Question: install dependencies → confirm (default: Yes)
-  - [ ] Question: final confirmation summary (default: Yes)
-  - [ ] Merge order implemented: defaults ← prompt answers ← commander flags
-  - [ ] Skip any question already answered by a flag; skip all with `--yes`
-- [ ] Build the `context` object and expose `run()` returning it (testable without I/O)
-- [ ] Add unit tests: flag/prompt merge precedence, validation edge cases
-- [ ] Verify both `--help` output and a full interactive session via `npm link`
+- [x] Implement `bin/index.js`:
+  - [x] Shebang `#!/usr/bin/env node`
+  - [x] Import and invoke `run(process.argv)` with top-level error handling
+- [x] Implement `src/cli.js`:
+  - [x] Configure `commander` program: name, description, version (read from `package.json`)
+  - [x] Positional argument: `<project-name>` (optional)
+  - [x] Flags: `--db <postgres|mongodb>`, `--docker` / `--no-docker`, `--skip-install`, `--yes`, `--verbose`, `--force`
+  - [x] Wire `program.action()` to the orchestration pipeline
+  - [x] Use `parseAsync` (required for async actions)
+- [x] Implement `src/validate.js`:
+  - [x] Project name validation via `validate-npm-package-name` (lowercase, npm-safe)
+  - [x] Target directory checks: exists? empty? (respect `--force`)
+- [x] Implement `src/prompts.js`:
+  - [x] Question: project name (default = directory name, validated)
+  - [x] Question: database → list choice PostgreSQL (default) / MongoDB
+  - [x] Question: Docker → confirm (default: Yes)
+  - [x] Question: install dependencies → confirm (default: Yes)
+  - [x] Question: final confirmation summary (default: Yes)
+  - [x] Merge order implemented: defaults ← prompt answers ← commander flags
+  - [x] Skip any question already answered by a flag; skip all with `--yes`
+- [x] Build the `context` object and expose `run()` returning it (testable without I/O)
+- [x] Add unit tests: flag/prompt merge precedence, validation edge cases
+- [x] Verify both `--help` output and a full interactive session via `npm link`
 
 ---
 
