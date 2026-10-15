@@ -124,3 +124,4 @@ export async function collectAnswers(flags = {}, defaultProjectName = DEFAULTS.p
 
   return mergeAnswersAndFlags(flags, answers);
 }
+
