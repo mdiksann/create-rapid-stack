@@ -60,3 +60,4 @@ test("collectAnswers with --yes skips prompts and applies defaults", async () =>
   assert.equal(result.docker, DEFAULTS.docker);
   assert.equal(result.install, DEFAULTS.install);
 });
+
