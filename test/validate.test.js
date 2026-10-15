@@ -61,4 +61,3 @@ test("resolveTarget resolves targetDir and default projectName", () => {
   assert.equal(projectName, "test-project");
   assert.equal(targetDir, "/tmp/test-project");
 });
-

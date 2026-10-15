@@ -1,10 +1,11 @@
 import { Command, Option } from "commander";
 import fs from "fs-extra";
 import { fileURLToPath } from "node:url";
-import path from "node:path";
 import { collectAnswers } from "./prompts.js";
 import { validateProjectName, validateTargetDirectory, resolveTarget } from "./validate.js";
 import { ScaffoldError } from "./errors.js";
+import { scaffoldFiles } from "./scaffold.js";
+import { installDependencies } from "./install.js";
 
 const pkgPath = fileURLToPath(new URL("../package.json", import.meta.url));
 const pkg = fs.readJsonSync(pkgPath);
@@ -77,6 +78,9 @@ export async function run(argv = process.argv) {
 
   // Determine initial fallback name from argument or current working directory
   const { projectName: initialName, targetDir } = resolveTarget(flags.projectName, process.cwd());
+  if (flags.projectName !== undefined) {
+    flags.projectName = initialName;
+  }
 
   // Collect and merge answers with flags
   const answers = await collectAnswers(flags, initialName);
@@ -90,9 +94,7 @@ export async function run(argv = process.argv) {
     );
   }
 
-  const finalTargetDir = flags.projectName
-    ? path.resolve(process.cwd(), finalProjectName)
-    : targetDir;
+  const finalTargetDir = targetDir;
 
   await validateTargetDirectory(finalTargetDir, answers.force);
 
@@ -107,7 +109,29 @@ export async function run(argv = process.argv) {
     flagsProvided: Object.keys(flags).length > 0,
   };
 
-  // Phase 3 exit criteria: print resolved context as JSON
+  // Track created directory for cleanup on SIGINT if interrupted
+  let scaffoldCompleted = false;
+  const onSigInt = async () => {
+    if (!scaffoldCompleted) {
+      try {
+        await fs.remove(finalTargetDir);
+      } catch {
+        // ignore cleanup error
+      }
+    }
+    process.exit(130);
+  };
+  process.on("SIGINT", onSigInt);
+
+  try {
+    await scaffoldFiles(context);
+    scaffoldCompleted = true;
+    await installDependencies(context);
+  } finally {
+    process.removeListener("SIGINT", onSigInt);
+  }
+
+  // Print resolved context for non-interactive / programmatic consumers
   console.log(JSON.stringify(context, null, 2));
 
   return context;

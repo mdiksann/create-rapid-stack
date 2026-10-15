@@ -115,30 +115,30 @@ Actionable task list, ordered by phase. Each phase is independently verifiable �
 
 **Exit criteria:** Running the CLI produces a directory tree where `grep -r "{{" ` returns nothing, `package.json` names are correct, and `npm install` completes.
 
-- [ ] Implement `src/scaffold.js`:
-  - [ ] Resolve `templates/` root via `fileURLToPath(import.meta.url)` — never `process.cwd()`
-  - [ ] Guard: abort with clear error if target dir exists and is non-empty (unless `--force`)
-  - [ ] Copy `templates/base/` → target dir (`fs.copy`)
-  - [ ] Copy `templates/overlays/db/<database>/` → target (overwrite-on-top)
-  - [ ] Conditionally copy `templates/overlays/docker/`; otherwise remove any docker artifacts
-  - [ ] Recursively walk the copied tree applying the injection rule table:
-    - [ ] `**/package.json` → structured edit via `fs.readJson` / `fs.writeJson` (set `name`)
-    - [ ] `README.md`, `.env*`, `docker-compose*.yml` → token replacement (`replaceAll`)
-    - [ ] Assemble `{{DATABASE_SERVICE}}` from the chosen DB overlay
-    - [ ] All other files untouched
-  - [ ] Post-injection assertion: throw if any `{{MARKER}}` remains in output
-  - [ ] Handle `SIGINT`: stop spinner, optionally `fs.remove` partial dir, exit `130`
-- [ ] Implement `src/install.js`:
-  - [ ] `spawn()` npm install per workspace (`frontend/`, `backend/`)
-  - [ ] `shell: process.platform === "win32"` for Windows `npm.cmd`
-  - [ ] Capture stderr; on non-zero exit throw `ScaffoldError` with a "re-run this command" hint
-  - [ ] Respect `--verbose` → `stdio: "inherit"`, otherwise `pipe`
-- [ ] Implement `ScaffoldError` with `hint` field + top-level formatter in `src/cli.js`
-- [ ] Write integration tests:
-  - [ ] Scaffold all 4 combinations (postgres/mongodb × docker on/off) into `fs.mkdtemp`
-  - [ ] Assert file presence/absence per combination
-  - [ ] Assert `package.json` names and zero leftover markers
-  - [ ] Assert install step runs (can be mocked with a stub script)
+- [x] Implement `src/scaffold.js`:
+  - [x] Resolve `templates/` root via `fileURLToPath(import.meta.url)` — never `process.cwd()`
+  - [x] Guard: abort with clear error if target dir exists and is non-empty (unless `--force`)
+  - [x] Copy `templates/base/` → target dir (`fs.copy`)
+  - [x] Copy `templates/overlays/db/<database>/` → target (overwrite-on-top)
+  - [x] Conditionally copy `templates/overlays/docker/`; otherwise remove any docker artifacts
+  - [x] Recursively walk the copied tree applying the injection rule table:
+    - [x] `**/package.json` → structured edit via `fs.readJson` / `fs.writeJson` (set `name`)
+    - [x] `README.md`, `.env*`, `docker-compose*.yml` → token replacement (`replaceAll`)
+    - [x] Assemble `{{DATABASE_SERVICE}}` from the chosen DB overlay
+    - [x] All other files untouched
+  - [x] Post-injection assertion: throw if any `{{MARKER}}` remains in output
+  - [x] Handle `SIGINT`: stop spinner, optionally `fs.remove` partial dir, exit `130`
+- [x] Implement `src/install.js`:
+  - [x] `spawn()` npm install per workspace (`frontend/`, `backend/`)
+  - [x] `shell: process.platform === "win32"` for Windows `npm.cmd`
+  - [x] Capture stderr; on non-zero exit throw `ScaffoldError` with a "re-run this command" hint
+  - [x] Respect `--verbose` → `stdio: "inherit"`, otherwise `pipe`
+- [x] Implement `ScaffoldError` with `hint` field + top-level formatter in `src/cli.js`
+- [x] Write integration tests:
+  - [x] Scaffold all 4 combinations (postgres/mongodb × docker on/off) into `fs.mkdtemp`
+  - [x] Assert file presence/absence per combination
+  - [x] Assert `package.json` names and zero leftover markers
+  - [x] Assert install step runs (can be mocked with a stub script)
 
 ---
 

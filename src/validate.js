@@ -64,8 +64,8 @@ export async function validateTargetDirectory(targetDir, force = false) {
  * @returns {{ projectName: string, targetDir: string }}
  */
 export function resolveTarget(inputName, cwd = process.cwd()) {
-  const projectName = (inputName || path.basename(cwd) || "rapid-app").trim();
   const targetDir = inputName ? path.resolve(cwd, inputName) : cwd;
+  const rawName = inputName ? path.basename(path.resolve(cwd, inputName)) : path.basename(cwd);
+  const projectName = (rawName || "rapid-app").trim();
   return { projectName, targetDir };
 }
-
