@@ -68,3 +68,4 @@ export function resolveTarget(inputName, cwd = process.cwd()) {
   const targetDir = inputName ? path.resolve(cwd, inputName) : cwd;
   return { projectName, targetDir };
 }
+
